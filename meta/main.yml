@@ -15,6 +15,9 @@ galaxy_info:
   - name: Debian
     versions:
     - jessie
+  - name: Ubuntu
+    versions:
+      - recent
 
   galaxy_tags:
     -  scientific

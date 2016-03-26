@@ -1,6 +1,8 @@
 Role Name
 =========
 
+[![Build Status](https://travis-ci.org/jbzdak/ansible-geant.svg?branch=master)](https://travis-ci.org/jbzdak/ansible-geant)
+
 A role that installs (compiles) Geant 4 simulation framework.
  
 By default it installs Geant 4.9.6.4. 
