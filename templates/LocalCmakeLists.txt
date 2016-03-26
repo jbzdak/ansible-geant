@@ -1,0 +1,21 @@
+
+set(
+  G4INCLUDE {{geant.dirs.install_dir}}/include/Geant4
+)
+
+set(
+  G4LINK_DIR {{geant.dirs.install_dir}}/lib {{geant.dirs.install_dir}}/lib/Geant4-9.6.4
+)
+
+set(
+  Geant4_DIR /opt/geant/4.9.6.2/build
+)
+
+set(
+  BOOST_LIB_DIR /usr/lib64
+)
+
+set(
+  BOOST_INCLUDE_DIR /usr/include
+)
+

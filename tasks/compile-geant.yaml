@@ -1,0 +1,13 @@
+- set_fact:
+    geant_placeholder: "{{geant.dirs.install_dir}}/.install-success"
+# Google compute clout allows sudo -i but not sudo -i -u for now I
+# manually fixed sudoers, if the problem occours it will explode this command
+# which should be easy do debug.
+- name: test sudo
+  command: echo 1
+- name: test for completion
+  command: test -e {{geant_placeholder}}
+  register: out
+  ignore_errors: true
+- include: _do_compile_geant.yaml
+  when: out.rc == 1

@@ -1,0 +1,37 @@
+- set_fact:
+    all_dirs:
+      - "{{geant.dirs.install_dir}}"
+      - "{{geant.dirs.src_dir}}"
+      - "{{geant.dirs.build_dir}}"
+- name: clean
+  file: name={{item}} state=absent
+  with_items: all_dirs
+  become: true
+- name: create
+  file: name={{item}} state=directory owner={{ geant.user }}
+  with_items: all_dirs
+  become: true
+  become_user: root
+- name: download-geant
+  get_url: dest=/tmp/geant.src.tar.gz url={{geant.downloads.source.url}} checksum={{geant.downloads.source.sig}}
+- name: extract
+  command: tar -xaf /tmp/geant.src.tar.gz -C {{geant.dirs.src_dir}} --strip-components=1
+- name: prepare-compilation
+  command: cmake -DCMAKE_INSTALL_PREFIX="{{geant.dirs.install_dir}}" {{geant.dirs.src_dir}} -Wno-dev chdir={{geant.dirs.build_dir}}
+- set_fact:
+    data_dir: "{{geant.dirs.install_dir}}/share/{{geant.version}}/data"
+- file: name={{data_dir}} state=directory
+- name: download-data-files
+  get_url: dest={{data_dir}} url={{item.url}} checksum={{item.sig}}
+  with_items: geant.downloads.data_files
+- name: unpack data
+  command: bash -c "cd {{data_dir}} && for f in $(ls -1 .); do tar -xaf $f; done"
+- name: prepare-compilation
+  command: cmake -DCMAKE_INSTALL_PREFIX="{{geant.dirs.install_dir}}" {{geant.dirs.src_dir}} -Wno-dev chdir={{geant.dirs.build_dir}}
+- name: compile
+  command: bash -c "make -j{{ansible_processor_vcpus}} > /dev/null" chdir={{geant.dirs.build_dir}}
+- name: compile
+  command: make install chdir={{geant.dirs.build_dir}}
+- name: touch
+  file: name={{geant_placeholder}} state=touch
+

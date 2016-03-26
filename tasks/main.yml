@@ -1,0 +1,21 @@
+---
+- block:
+  - name: install-packages
+    yum: state=present name={{item}}
+    with_items: "{{geant.dependencies.centos}}"
+    when: ansible_os_family == "RedHat"
+  - name: install-packages
+    apt: state=present name={{item}}
+    with_items: "{{geant.dependencies.debian}}"
+    when: ansible_os_family == "Debian"
+  - name: create user
+    user: name={{geant.user}} state=present
+  become: true
+  become_user: root
+- include: compile-geant.yaml
+  become: true
+  become_user: "{{geant.user}}"
+- name: set source file
+  set_fact:
+    geant_bin_dir: "{{geant.dirs.install_dir}}/bin"
+    geant_source_file: "{{geant.dirs.install_dir}}/bin/geant4.sh"
