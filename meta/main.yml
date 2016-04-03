@@ -2,22 +2,21 @@ galaxy_info:
   author: Jacek Bzdak <jbzdak@gmail.com>
   description: |
 
-    This is an Ansible role to install Geant software on Debian (tested) and
-    CentOs (tested once, that not)
+    This is an Ansible role to install Geant software on Debian (tested) / Ubuntu
+    (installs on Travis) and CentOs (tested once, that not).
+
+    Works on Ansible 2.0.1, and probably no ther version (some 2.0 features
+    are used, and some deprecated ones too).
 
   company: Askesis Technology
   license: BSD
-  min_ansible_version: 2.0.1 (not tested on anthing else)
+  min_ansible_version: 2.0.1
   platforms:
   - name: CentOs
-    versions:
-    - newest one
   - name: Debian
     versions:
     - jessie
   - name: Ubuntu
-    versions:
-      - recent
 
   galaxy_tags:
     -  scientific

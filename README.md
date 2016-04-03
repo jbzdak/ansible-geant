@@ -1,5 +1,5 @@
-Role Name
-=========
+Ansible Geant
+=============
 
 [![Build Status](https://travis-ci.org/jbzdak/ansible-geant.svg?branch=master)](https://travis-ci.org/jbzdak/ansible-geant)
 
